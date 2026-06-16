@@ -1,0 +1,586 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);color:var(--color-text-primary)}
+.hero{padding:2rem 1.5rem 1rem;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:1.25rem}
+.hero h1{font-size:22px;font-weight:500;margin-bottom:6px}
+.hero p{font-size:14px;color:var(--color-text-secondary);line-height:1.6}
+.nav{display:flex;flex-wrap:wrap;gap:6px;padding:0 1.5rem 1.25rem}
+.nb{padding:6px 13px;border:0.5px solid var(--color-border-secondary);border-radius:20px;font-size:12px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary);transition:all .15s;white-space:nowrap}
+.nb:hover{background:var(--color-background-secondary)}
+.nb.on{background:#E6F1FB;color:#0C447C;border-color:#85B7EB;font-weight:500}
+.bar{height:3px;background:var(--color-background-secondary);margin:0 1.5rem 1.25rem;border-radius:2px}
+.fill{height:100%;background:#378ADD;border-radius:2px;transition:width .3s}
+.pane{display:none;padding:0 1.5rem 2rem}
+.pane.on{display:block}
+.sh{display:flex;align-items:center;gap:14px;margin-bottom:1.25rem;padding-bottom:1rem;border-bottom:0.5px solid var(--color-border-tertiary)}
+.snum{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:500;flex-shrink:0}
+.sh h2{font-size:18px;font-weight:500}
+.sh p{font-size:13px;color:var(--color-text-secondary);margin-top:3px;line-height:1.5}
+.sec{font-size:15px;font-weight:500;margin:1.5rem 0 .75rem;color:var(--color-text-primary)}
+.body{font-size:14px;color:var(--color-text-secondary);line-height:1.7;margin-bottom:.75rem}
+.box{padding:1rem 1.25rem;border-radius:var(--border-radius-lg);margin:.75rem 0;border-left:3px solid}
+.bblue{background:#E6F1FB;border-color:#378ADD}.bblue .bt{color:#0C447C;font-weight:500;font-size:14px;margin-bottom:5px}.bblue .bd{color:#185FA5;font-size:13px;line-height:1.65}
+.bgreen{background:#EAF3DE;border-color:#639922}.bgreen .bt{color:#3B6D11;font-weight:500;font-size:14px;margin-bottom:5px}.bgreen .bd{color:#3B6D11;font-size:13px;line-height:1.65}
+.bamber{background:#FAEEDA;border-color:#BA7517}.bamber .bt{color:#854F0B;font-weight:500;font-size:14px;margin-bottom:5px}.bamber .bd{color:#854F0B;font-size:13px;line-height:1.65}
+.bred{background:#FCEBEB;border-color:#E24B4A}.bred .bt{color:#791F1F;font-weight:500;font-size:14px;margin-bottom:5px}.bred .bd{color:#A32D2D;font-size:13px;line-height:1.65}
+.bpurple{background:#EEEDFE;border-color:#7F77DD}.bpurple .bt{color:#3C3489;font-weight:500;font-size:14px;margin-bottom:5px}.bpurple .bd{color:#534AB7;font-size:13px;line-height:1.65}
+.tbl{width:100%;border-collapse:collapse;margin:.75rem 0;font-size:13px;table-layout:fixed}
+.tbl th{background:#E6F1FB;color:#0C447C;font-weight:500;padding:9px 10px;text-align:left;border:0.5px solid #B5D4F4}
+.tbl td{padding:9px 10px;border:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);line-height:1.55;vertical-align:top}
+.tbl tr:nth-child(even) td{background:var(--color-background-secondary)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:.75rem 0}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:.75rem 0}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem}
+.clabel{font-size:11px;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px}
+.cval{font-size:22px;font-weight:500}
+.csub{font-size:12px;color:var(--color-text-secondary);margin-top:4px;line-height:1.5}
+.badge{display:inline-block;padding:2px 8px;border-radius:var(--border-radius-md);font-size:11px;font-weight:500}
+.bg{background:#EAF3DE;color:#3B6D11}
+.br{background:#FCEBEB;color:#791F1F}
+.ba{background:#FAEEDA;color:#854F0B}
+.bb{background:#E6F1FB;color:#185FA5}
+.bp{background:#EEEDFE;color:#3C3489}
+.steps{display:flex;flex-direction:column;gap:12px;margin:.75rem 0}
+.step{display:flex;gap:12px}
+.sdot{width:30px;height:30px;border-radius:50%;background:#E6F1FB;color:#0C447C;font-size:13px;font-weight:500;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.sc strong{display:block;font-size:14px;font-weight:500;margin-bottom:3px}
+.sc p{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+.calc{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;margin:.75rem 0}
+.crow{display:flex;justify-content:space-between;align-items:flex-start;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary);font-size:14px;gap:12px}
+.crow:last-child{border-bottom:none;font-weight:500}
+.crow .cl{color:var(--color-text-secondary);flex:1}
+.crow .cv{color:var(--color-text-primary);text-align:right}
+.navbtns{display:flex;justify-content:space-between;margin-top:1.75rem;padding-top:1rem;border-top:0.5px solid var(--color-border-tertiary)}
+.btn{padding:8px 18px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-primary)}
+.btn:hover{background:var(--color-background-secondary)}
+.btnp{background:#E6F1FB;color:#0C447C;border-color:#85B7EB}
+.qa{margin:.75rem 0}
+.q{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.75rem 1rem;cursor:pointer;font-size:14px;font-weight:500;display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.q:hover{background:var(--color-background-primary)}
+.q .qi{font-size:16px;color:var(--color-text-secondary);transition:transform .2s}
+.q.open .qi{transform:rotate(180deg)}
+.ans{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:1rem;font-size:13px;color:var(--color-text-secondary);line-height:1.7;display:none;margin-bottom:8px}
+.ans.show{display:block}
+.highlight{background:#FAEEDA;border-radius:var(--border-radius-md);padding:2px 6px;color:#854F0B;font-size:13px;font-weight:500}
+.divider{height:0.5px;background:var(--color-border-tertiary);margin:1.5rem 0}
+</style>
+
+<div class="hero">
+  <h1>Google Ads — Campaign Planning & Strategy</h1>
+  <p>Topic 2 বিস্তারিত গাইড — Dental Clinic Case Study সহ সম্পূর্ণ ব্যাখ্যা</p>
+</div>
+
+<div class="bar"><div class="fill" id="prog" style="width:14%"></div></div>
+
+<div class="nav">
+  <button class="nb on" onclick="go(0)">Stage 1 — Business</button>
+  <button class="nb" onclick="go(1)">Stage 2 — Customer</button>
+  <button class="nb" onclick="go(2)">Stage 3 — Market</button>
+  <button class="nb" onclick="go(3)">Stage 4 — Competitor</button>
+  <button class="nb" onclick="go(4)">Stage 5 — Offer</button>
+  <button class="nb" onclick="go(5)">Stage 6 — Campaign</button>
+  <button class="nb" onclick="go(6)">Stage 7 — Budget</button>
+</div>
+
+<div class="pane on" id="p0">
+  <div class="sh">
+    <div class="snum" style="background:#E6F1FB;color:#0C447C">1</div>
+    <div><h2>Business Understanding</h2><p>Google Ads চালানোর আগে business-এর মালিকের মতো চিন্তা করো</p></div>
+  </div>
+
+  <div class="box bblue"><div class="bt">এই Stage-এ আসলে কী করো?</div><div class="bd">Campaign create করার কথা মাথায় আনবে না। শুধু ভাববে — "এই business টা কিভাবে টাকা আয় করে? কোন service সবচেয়ে profitable? আমি যদি ads দিই, কোনটায় দিলে business-এর সবচেয়ে বেশি লাভ হবে?" এটাই হলো একজন সত্যিকারের Google Ads Strategist-এর প্রথম কাজ।</div></div>
+
+  <div class="sec">Module 1 — Business Model: কোন প্রশ্ন করবে?</div>
+  <p class="body">বেশিরভাগ beginner সরাসরি campaign-এর কথা ভাবে। কিন্তু একজন strategist আগে business টা বোঝে। নিচে দেখো সঠিক এবং ভুল প্রশ্নের পার্থক্য:</p>
+  <div class="grid2">
+    <div class="box bred" style="margin:0"><div class="bt">ভুল প্রশ্ন (Beginner)</div><div class="bd">Campaign কিভাবে করবো?<br>কোন keyword target করবো?<br>Budget কত দেবো?<br>Ad copy কী লিখবো?</div></div>
+    <div class="box bgreen" style="margin:0"><div class="bt">সঠিক প্রশ্ন (Strategist)</div><div class="bd">Business টা আসলে কী বিক্রি করে?<br>কোন service থেকে বেশি profit?<br>কোনটা promote করলে ROI বেশি?<br>এই business কীভাবে scale হবে?</div></div>
+  </div>
+  <p class="body" style="margin-top:.75rem">উদাহরণ: Dentist Clinic-এর ৫টি service আছে — Teeth Cleaning, Root Canal, Dental Implant, Teeth Whitening, Braces। এখন প্রশ্ন হলো, সবগুলো কি একসাথে promote করবো? উত্তর হলো না — আগে বুঝতে হবে কোনটা সবচেয়ে লাভজনক।</p>
+
+  <div class="sec">Module 2 — Profitability Analysis</div>
+  <p class="body">প্রতিটি service-এর revenue এবং profit এক নয়। একটা service বেশি revenue আনলেই সেটা সবচেয়ে ভালো না — profit margin দেখতে হবে।</p>
+  <table class="tbl">
+    <tr><th style="width:30%">Service</th><th style="width:18%">Revenue</th><th style="width:18%">Cost</th><th style="width:18%">Profit</th><th style="width:16%">Priority</th></tr>
+    <tr><td>Teeth Cleaning</td><td>$100</td><td>$60</td><td>$40</td><td><span class="badge br">Low</span></td></tr>
+    <tr><td>Teeth Whitening</td><td>$300</td><td>$180</td><td>$120</td><td><span class="badge ba">Medium</span></td></tr>
+    <tr><td>Root Canal</td><td>$700</td><td>$420</td><td>$280</td><td><span class="badge bb">Good</span></td></tr>
+    <tr><td>Braces</td><td>$4,000</td><td>$2,400</td><td>$1,600</td><td><span class="badge bg">High</span></td></tr>
+    <tr><td><strong>Dental Implant</strong></td><td><strong>$6,000</strong></td><td><strong>$3,500</strong></td><td><strong>$2,500</strong></td><td><span class="badge bg">Best</span></td></tr>
+  </table>
+  <div class="box bgreen"><div class="bt">Decision — Budget কম থাকলে কী করবে?</div><div class="bd">প্রথমে Dental Implant এবং Braces promote করবে। কারণ এগুলো "high-ticket" service — একটি patient থেকেই অনেক বেশি profit আসে। Teeth Cleaning promote করে $40 profit পাওয়ার চেয়ে Implant promote করে $2,500 profit অনেক বেশি বুদ্ধিমানের কাজ।</div></div>
+
+  <div class="sec">Module 3 — Close Rate (Lead থেকে Customer)</div>
+  <p class="body">Lead মানেই customer নয়। ১০০ জন call করলে সবাই patient হয় না। Close Rate হলো কতজন lead শেষ পর্যন্ত পেমেন্ট করে treatment নেয় তার হার।</p>
+  <table class="tbl">
+    <tr><th style="width:30%">Service</th><th style="width:20%">Close Rate</th><th>বাস্তব মানে</th></tr>
+    <tr><td>Teeth Cleaning</td><td><span class="badge bg">80%</span></td><td>১০ জন call → ৮ জন আসে, সহজ decision</td></tr>
+    <tr><td>Root Canal</td><td><span class="badge bb">60%</span></td><td>১০ জন call → ৬ জন আসে, মাঝারি conversion</td></tr>
+    <tr><td>Braces</td><td><span class="badge ba">35%</span></td><td>১০ জন call → ৩-৪ জন আসে, ভাবনা দরকার</td></tr>
+    <tr><td>Dental Implant</td><td><span class="badge br">15%</span></td><td>১০ জন call → মাত্র ১-২ জন, high-consideration</td></tr>
+  </table>
+  <p class="body">Implant-এর close rate কম কেন? কারণ এটা expensive ($6,000), patient অনেক ভাবে, compare করে, ভয় পায়। তাই close rate কম হলে শুধু আরও বেশি lead আনলে হবে না — offer, sales process, এবং follow-up ঠিক করতে হবে।</p>
+
+  <div class="sec">Module 4 — Unit Economics</div>
+  <p class="body">Unit Economics মানে একজন customer পাওয়ার জন্য সর্বোচ্চ কত খরচ করা safe সেটা বের করা। এটা না জানলে ads-এ কত budget দেবে সেটা বুঝবে না।</p>
+  <div class="grid3">
+    <div class="card"><div class="clabel">Avg Revenue (Implant)</div><div class="cval">$6,000</div><div class="csub">একজন patient থেকে</div></div>
+    <div class="card"><div class="clabel">Profit Margin</div><div class="cval">40%</div><div class="csub">= $2,400 profit</div></div>
+    <div class="card"><div class="clabel">Ads + Sales Cost</div><div class="cval">$600</div><div class="csub">Safe CPA limit</div></div>
+    <div class="card"><div class="clabel">Net Profit</div><div class="cval" style="color:#3B6D11">$1,800</div><div class="csub">লাভে আছে</div></div>
+  </div>
+  <div class="box bamber"><div class="bt">Key Insight — Expensive keyword ভয় পাবে না</div><div class="bd">যদি একজন patient আনতে $600 খরচ হয় এবং সেই patient থেকে $2,400 profit আসে — তাহলে যত expensive keyword হোক না কেন, সেটা profitable। এই হিসাবটা না বুঝলে অনেক সময় সঠিক keyword বাদ দিয়ে দেওয়া হয়।</div></div>
+
+  <div class="sec">Module 5 — Business Goals কিভাবে define করবে?</div>
+  <p class="body">Clinic owner যখন বলে "আমি আরও patient চাই" — এটা যথেষ্ট নয়। তোমাকে ৪টি প্রশ্ন করতে হবে:</p>
+  <div class="steps">
+    <div class="step"><div class="sdot">1</div><div class="sc"><strong>কোন ধরনের patient চান?</strong><p>Cleaning patient? Implant patient? Braces patient? সব patient সমান নয়। Implant patient অনেক বেশি valuable।</p></div></div>
+    <div class="step"><div class="sdot">2</div><div class="sc"><strong>কোন service-এর patient সবচেয়ে valuable?</strong><p>Profit analysis করে বলো কোন service-এ বেশি মনোযোগ দেওয়া উচিত।</p></div></div>
+    <div class="step"><div class="sdot">3</div><div class="sc"><strong>Close rate কেমন — এবং কোথায় সমস্যা?</strong><p>যদি Implant-এর close rate কম হয়, তাহলে landing page, offer, বা sales process কোথায় সমস্যা সেটা খুঁজে বের করো।</p></div></div>
+    <div class="step"><div class="sdot">4</div><div class="sc"><strong>Average ticket value কত?</strong><p>$6,000 service-এ $500 CPA acceptable। $100 service-এ $50 CPA-ও problem হতে পারে।</p></div></div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sec">সচরাচর জিজ্ঞাসা (FAQ)</div>
+  <div class="qa">
+    <div class="q" onclick="tog(this)"><span>সব service একসাথে promote করা কি ভালো?</span><i class="ti ti-chevron-down qi" aria-hidden="true"></i></div>
+    <div class="ans">না। বিশেষত যখন budget সীমিত, তখন সবচেয়ে profitable service-এ focus করো। সবকিছুতে budget ছড়িয়ে দিলে কোনোটাতেই ভালো result আসে না। Dental Implant এবং Braces-এ focus করলে কম budget-এ বেশি profit।</div>
+    <div class="q" onclick="tog(this)"><span>Close rate কম হলে কি আরও বেশি ads চালাবো?</span><i class="ti ti-chevron-down qi" aria-hidden="true"></i></div>
+    <div class="ans">না। Close rate কম মানে ads-এর সমস্যা নয়, এটা offer, sales process বা follow-up-এর সমস্যা। আরও বেশি ads চালালে শুধু টাকা নষ্ট হবে। আগে close rate ঠিক করো, তারপর ads বাড়াও।</div>
+    <div class="q" onclick="tog(this)"><span>Unit Economics কেন গুরুত্বপূর্ণ?</span><i class="ti ti-chevron-down qi" aria-hidden="true"></i></div>
+    <div class="ans">Unit Economics না জানলে ads-এ কত budget দেওয়া safe সেটা বুঝতে পারবে না। অনেকে expensive keyword দেখে ভয় পায়, কিন্তু unit economics বুঝলে বোঝা যায় $600 CPA-তেও business profitable থাকতে পারে — যদি service value বেশি হয়।</div>
+  </div>
+
+  <div class="navbtns"><div></div><button class="btn btnp" onclick="go(1)">পরের Stage — Customer Research →</button></div>
+</div>
+
+<div class="pane" id="p1">
+  <div class="sh">
+    <div class="snum" style="background:#EAF3DE;color:#3B6D11">2</div>
+    <div><h2>Customer Research</h2><p>কাস্টমারকে গভীরভাবে বোঝো — কে, কী চায়, কেন কিনবে</p></div>
+  </div>
+
+  <div class="box bgreen"><div class="bt">এই Stage-এ আসলে কী করো?</div><div class="bd">Campaign setup করবে না। শুধু বুঝবে — আমার target customer কে? সে কী সমস্যায় আছে? সে Google-এ কী লিখে search করে? সে কখন এবং কেন একজন dentist-এর কাছে যায়? এই তথ্যগুলো পরে সব কিছুতে কাজে লাগে — keyword, ad copy, landing page, offer সব।</div></div>
+
+  <div class="sec">Module 6 — Customer Avatar (৪ ধরনের Patient)</div>
+  <p class="body">সব patient একই কারণে dentist-এর কাছে যায় না। প্রতিটি ধরনের patient-এর আলাদা motivation আছে — তাই তাদের কাছে পৌঁছানোর পদ্ধতিও আলাদা।</p>
+  <table class="tbl">
+    <tr><th style="width:22%">Type</th><th style="width:25%">Profile</th><th style="width:28%">তাদের সমস্যা</th><th style="width:25%">Motivation</th></tr>
+    <tr><td><strong>General Adult</strong><br><span class="badge bb">Age 20–50</span></td><td>Job holder, business owner, middle/upper-middle class</td><td>Dental pain, cavity, bleeding gum, hygiene concern</td><td>Problem-driven — সমস্যা হলে তখন যায়</td></tr>
+    <tr><td><strong>Emergency</strong><br><span class="badge br">Any age</span></td><td>Severe tooth pain, infection, swelling, রাতে সমস্যা</td><td>অসহ্য ব্যথা, infection, দেরি করা যাবে না</td><td>Urgency-driven — এখনই চিকিৎসা দরকার</td></tr>
+    <tr><td><strong>Aesthetic</strong><br><span class="badge bp">Age 18–35</span></td><td>Young professional, social media aware, appearance-conscious</td><td>হলুদ দাঁত, বাঁকা দাঁত, হাসিতে confidence নেই</td><td>Appearance-driven — সুন্দর দেখাতে চায়</td></tr>
+    <tr><td><strong>Parents</strong><br><span class="badge ba">Age 30–45</span></td><td>Parent, সন্তানের স্বাস্থ্য নিয়ে চিন্তিত</td><td>বাচ্চার cavity, checkup, braces দরকার</td><td>Trust-driven — নিরাপদ এবং expert চায়</td></tr>
+  </table>
+  <div class="box bamber"><div class="bt">কেন এটা গুরুত্বপূর্ণ?</div><div class="bd">Emergency patient-এর কাছে "Free Consultation" offer কাজ করে না — সে এখনই treatment চায়। Aesthetic patient-এর কাছে "Emergency Service" relevant নয় — সে সুন্দর হাসি চায়। প্রতিটি customer type-এর জন্য আলাদা message দরকার।</div></div>
+
+  <div class="sec">Module 7 — Customer Psychology: ৩টি Stage</div>
+  <p class="body">একজন customer Google-এ search করার আগে তার মাথায় একটি journey চলে। সে কোন stage-এ আছে সেটা বুঝলে কোন ধরনের ad দেখাবে সেটা সহজে decide করতে পারবে।</p>
+  <table class="tbl">
+    <tr><th style="width:25%">Stage</th><th style="width:35%">কী Search করে</th><th style="width:20%">মানসিকতা</th><th style="width:20%">Best Approach</th></tr>
+    <tr><td><span class="badge br">Problem Aware</span></td><td>"tooth pain", "gum bleeding solution", "দাঁতে ব্যথা কেন হয়"</td><td>সমস্যা বুঝেছে কিন্তু solution জানে না</td><td>Blog post, YouTube video — educate করো</td></tr>
+    <tr><td><span class="badge ba">Solution Aware</span></td><td>"dental clinic near me", "root canal treatment", "tooth extraction service"</td><td>জানে dentist দরকার, খুঁজছে</td><td>Search ads, comparison content</td></tr>
+    <tr><td><span class="badge bg">Ready to Buy</span></td><td>"emergency dentist near me", "best dental clinic Dhaka", "24 hour dental"</td><td>এখনই action নিতে চায়</td><td>Google Search Ads — সরাসরি call/book</td></tr>
+  </table>
+  <div class="box bblue"><div class="bt">Strategy Decision</div><div class="bd">"Ready to Buy" stage-এ সবচেয়ে বেশি conversion হয় — এখানে Search Ads দাও। Budget কম থাকলে শুধু এই stage-এই focus করো। Budget বেশি থাকলে "Solution Aware" stage-এও target করো। "Problem Aware" stage-এ blog বা YouTube content দাও — ads দিলে conversion কম হবে।</div></div>
+
+  <div class="sec">Module 8 — Customer Journey (৪ ধাপ)</div>
+  <p class="body">একজন patient কিভাবে step by step সিদ্ধান্ত নেয় সেটা বোঝো। এই journey বুঝলে তুমি জানবে ঠিক কোন মুহূর্তে ads দেখানো উচিত।</p>
+  <div class="steps">
+    <div class="step"><div class="sdot">1</div><div class="sc"><strong>Awareness — "দাঁতে ব্যথা কেন হচ্ছে?"</strong><p>Patient এখনও dentist-এর কথা ভাবছে না। সে শুধু তার সমস্যাটা বুঝতে চাইছে। এখানে educational content best।</p></div></div>
+    <div class="step"><div class="sdot">2</div><div class="sc"><strong>Consideration — "কোন dental clinic ভালো?"</strong><p>Patient এখন options compare করছে। Google reviews পড়ছে, website দেখছে, বন্ধুকে জিজ্ঞেস করছে। এখানে তোমার clinic-এর ভালো reviews এবং offer গুরুত্বপূর্ণ।</p></div></div>
+    <div class="step"><div class="sdot">3</div><div class="sc"><strong>Decision — "best dental clinic near me"</strong><p>Patient এখন সিদ্ধান্ত নিতে প্রস্তুত। এই মুহূর্তে তোমার ad দেখালে সে click করবে। Strong CTA দাও — "Call Now", "Book Today"।</p></div></div>
+    <div class="step"><div class="sdot">4</div><div class="sc"><strong>Conversion — Call করে বা appointment book করে</strong><p>Landing page-এ এলে সহজে যোগাযোগ করার সুযোগ দাও। Phone number clear রাখো, form ছোট রাখো।</p></div></div>
+  </div>
+
+  <div class="sec">Module 9 — Search Intent (3 ধরনের Intent)</div>
+  <p class="body">Intent মানে হলো — patient Google-এ কী লিখছে তার পেছনে তার উদ্দেশ্য কী। সব search একই conversion দেয় না।</p>
+  <table class="tbl">
+    <tr><th style="width:25%">Intent Type</th><th style="width:35%">উদাহরণ</th><th style="width:20%">Conversion</th><th style="width:20%">Ads দেবে?</th></tr>
+    <tr><td><span class="badge bb">Informational</span></td><td>"tooth pain cause", "how to stop gum bleeding", "cavity কী"</td><td><span class="badge br">Very Low</span></td><td>না, blog content দাও</td></tr>
+    <tr><td><span class="badge ba">Commercial</span></td><td>"best dental clinic", "dental clinic reviews Dhaka", "dentist price"</td><td><span class="badge ba">Medium</span></td><td>হ্যাঁ, যদি budget থাকে</td></tr>
+    <tr><td><span class="badge bg">Transactional</span></td><td>"emergency dentist near me", "dental clinic open now", "book dentist appointment"</td><td><span class="badge bg">Highest</span></td><td>অবশ্যই — এখানেই বেশি focus</td></tr>
+  </table>
+
+  <div class="sec">Module 10 — Buying Triggers (কী দেখলে patient action নেয়?)</div>
+  <p class="body">শুধু ads দেখলেই patient আসে না। তার মনে একটি "trigger" দরকার যেটা তাকে এখনই action নিতে বাধ্য করে। এই triggers গুলো জানলে ad copy এবং offer অনেক বেশি effective হয়।</p>
+  <table class="tbl">
+    <tr><th style="width:20%">Trigger</th><th style="width:25%">Patient-এর ভয় / চাওয়া</th><th style="width:30%">Ad Message যা কাজ করে</th><th style="width:25%">কেন কাজ করে?</th></tr>
+    <tr><td><strong>Pain / Emergency</strong></td><td>অসহ্য ব্যথা, infection, swelling</td><td>"Same Day Emergency Treatment Available"</td><td>সঙ্গে সঙ্গে সমাধান দিচ্ছে</td></tr>
+    <tr><td><strong>Price Concern</strong></td><td>Treatment অনেক expensive মনে হচ্ছে</td><td>"Affordable Payment Plan | EMI Available"</td><td>আর্থিক বাধা সরাচ্ছে</td></tr>
+    <tr><td><strong>Trust Issue</strong></td><td>ডাক্তার ভালো কিনা, ব্যথা হবে কিনা</td><td>"5-Star Reviews | 15+ Years Experience | Certified Surgeon"</td><td>বিশ্বাসযোগ্যতা তৈরি করছে</td></tr>
+    <tr><td><strong>Cosmetic Desire</strong></td><td>সুন্দর smile চাই</td><td>"Free Braces Consultation | Smile Transformation"</td><td>স্বপ্নের result দেখাচ্ছে</td></tr>
+    <tr><td><strong>Fear of Damage</strong></td><td>দাঁত ভাঙবে বা পড়বে</td><td>"Prevent Permanent Damage — Treat Early"</td><td>urgency তৈরি করছে</td></tr>
+  </table>
+
+  <div class="divider"></div>
+  <div class="sec">সচরাচর জিজ্ঞাসা (FAQ)</div>
+  <div class="qa">
+    <div class="q" onclick="tog(this)"><span>Customer avatar কেন জানা দরকার?</span><i class="ti ti-chevron-down qi" aria-hidden="true"></i></div>
+    <div class="ans">কারণ ভিন্ন ধরনের customer-এর কাছে ভিন্ন message কাজ করে। Emergency patient-কে "Free Consultation" বলা waste — সে এখনই treatment চায়। কিন্তু Cosmetic patient-কে "Emergency Service" বললে সে interested হবে না। সঠিক customer-এর কাছে সঠিক message পৌঁছালেই conversion বাড়ে।</div>
+    <div class="q" onclick="tog(this)"><span>Search intent না বুঝে ads দিলে কী হয়?</span><i class="ti ti-chevron-down qi" aria-hidden="true"></i></div>
+    <div class="ans">যদি informational intent-এ ("tooth pain cause") ads দাও, তাহলে patient সেখানে information খুঁজছে — সে এখনই dentist-এর কাছে যেতে চায় না। তাই ad-এ click করলেও appointment নেবে না। CPC যাবে, lead আসবে না। Budget নষ্ট হবে।</div>
+    <div class="q" onclick="tog(this)"><span>Customer journey-এর কোন stage-এ সবচেয়ে বেশি ads spend করবো?</span><i class="ti ti-chevron-down qi" aria-hidden="true"></i></div>
+    <div class="ans">Decision stage-এ — যেখানে patient "best dental clinic near me" লিখছে। এখানে সে ready, শুধু কোনটা choose করবে সেটা ভাবছে। এই মুহূর্তে তোমার ad দেখলে conversion হওয়ার সম্ভাবনা সবচেয়ে বেশি।</div>
+  </div>
+
+  <div class="navbtns"><button class="btn" onclick="go(0)">← Business Understanding</button><button class="btn btnp" onclick="go(2)">পরের Stage — Market Research →</button></div>
+</div>
+
+<div class="pane" id="p2">
+  <div class="sh">
+    <div class="snum" style="background:#FAEEDA;color:#854F0B">3</div>
+    <div><h2>Market Research</h2><p>কোথায় invest করলে সবচেয়ে বেশি return পাবে?</p></div>
+  </div>
+
+  <div class="box bamber"><div class="bt">এই Stage-এ আসলে কী করো?</div><div class="bd">এটা Google Ads-এর সবচেয়ে decision-heavy stage। এখানে শুধু data দেখবে না — data দেখে সিদ্ধান্ত নেবে। "এই market-এ কি যথেষ্ট demand আছে? আমি কি এখানে profitable হতে পারবো? কোথায় ads দেখাবো?" — এই প্রশ্নগুলোর উত্তর খুঁজে বের করো।</div></div>
+  <p class="body" style="margin-bottom:0"><strong>উদাহরণ: Dental Clinic — Dhanmondi, Dhaka</strong></p>
+
+  <div class="sec">Step 1 — Demand Research</div>
+  <p class="body">প্রথমে দেখো মানুষ আসলে এই service search করে কিনা। কারণ যদি demand না থাকে, তাহলে ads চালিয়ে কোনো লাভ নেই।</p>
+  <table class="tbl">
+    <tr><th style="width:35%">Keyword</th><th style="width:25%">Search Volume</th><th style="width:40%">মানে</th></tr>
+    <tr><td>dentist near me</td><td><span class="badge bg">High</span></td><td>প্রচুর মানুষ খুঁজছে — excellent</td></tr>
+    <tr><td>dental clinic dhaka</td><td><span class="badge bg">High</span></td><td>Local demand ভালো</td></tr>
+    <tr><td>root canal treatment dhaka</td><td><span class="badge bb">Medium</span></td><td>Specific service, convertible</td></tr>
+    <tr><td>dental implant dhaka</td><td><span class="badge ba">Medium</span></td><td>High-value, worth targeting</td></tr>
+  </table>
+  <div class="box bgreen"><div class="bt">Decision Rule</div><div class="bd">High search volume → এই market-এ invest করা নিরাপদ। Low search volume → সাবধান, demand কম মানে যত ভালো ad-ই দাও, কেউ দেখবে না।</div></div>
+
+  <div class="sec">Step 2 — Competition Research</div>
+  <p class="body">কতজন competitor ইতিমধ্যে ads চালাচ্ছে সেটা দেখো। Competition বেশি হলে differentiation দরকার, কম হলে সুযোগ বেশি।</p>
+  <table class="tbl">
+    <tr><th style="width:35%">Competitor</th><th style="width:30%">Type</th><th style="width:35%">Market Position</th></tr>
+    <tr><td>Labaid Dental</td><td><span class="badge br">Big Brand</span></td><td>Strong brand, বড় budget</td></tr>
+    <tr><td>Square Dental</td><td><span class="badge br">Big Brand</span></td><td>Multiple locations, known</td></tr>
+    <tr><td>Local clinics</td><td><span class="badge bb">Local</span></td><td>আমাদের মতো same level</td></tr>
+  </table>
+  <div class="box bred"><div class="bt">Mistake এড়াও</div><div class="bd">বড় brand-এর সাথে direct price war করতে যেওয়া ভুল — তাদের budget অনেক বেশি। বরং differentiation করো: Same Day Appointment, Emergency Service, Female Dentist Available, Flexible Payment — এগুলো দিয়ে আলাদা হও।</div></div>
+
+  <div class="sec">Step 3 — CPC Research</div>
+  <p class="body">CPC (Cost Per Click) মানে একটা click কিনতে কত টাকা লাগবে। এটা জানা দরকার budget plan করার জন্য।</p>
+  <div class="grid3">
+    <div class="card"><div class="clabel">General dental (Dhaka)</div><div class="cval">$2–5</div><div class="csub">Relatively affordable</div></div>
+    <div class="card"><div class="clabel">Emergency dentist</div><div class="cval">$5–10</div><div class="csub">Higher competition</div></div>
+    <div class="card"><div class="clabel">Dental implant</div><div class="cval">$8–15</div><div class="csub">High-value keyword</div></div>
+  </div>
+  <div class="box bblue"><div class="bt">High CPC মানেই কি খারাপ?</div><div class="bd">না। Dental Implant keyword-এ $15 per click দিলেও যদি সেই click থেকে $6,000-এর patient আসে, তাহলে সেটা অনেক profitable। High CPC খারাপ তখনই যখন service value কম।</div></div>
+
+  <div class="sec">Step 4 — Seasonality Research</div>
+  <p class="body">Dental service-এর demand সারা বছর কেমন থাকে সেটা বোঝো। Seasonal demand হলে campaign-এর timing adjust করতে হবে।</p>
+  <table class="tbl">
+    <tr><th style="width:35%">Service</th><th style="width:30%">Demand Pattern</th><th style="width:35%">Implication</th></tr>
+    <tr><td>Tooth Pain / Emergency</td><td><span class="badge bg">Year-round</span></td><td>Evergreen — সারা বছর ads চালাও</td></tr>
+    <tr><td>Root Canal</td><td><span class="badge bg">Year-round</span></td><td>Consistent demand</td></tr>
+    <tr><td>Braces</td><td><span class="badge bb">Slight peak (school year)</span></td><td>Back-to-school period বেশি demand</td></tr>
+    <tr><td>Teeth Whitening</td><td><span class="badge ba">Seasonal</span></td><td>Eid, wedding season-এ বেশি</td></tr>
+  </table>
+
+  <div class="sec">Step 5, 6 & 7 — Market Size, Geographic Targeting, Auction Insights</div>
+  <div class="steps">
+    <div class="step"><div class="sdot">5</div><div class="sc"><strong>Market Size — এই market কি বড় enough?</strong><p>Dental clinic-এর ৫টি major service আছে, প্রতিটিতে ভালো search volume। এটা একটি বড় market যেখানে long-term scale করা সম্ভব।</p></div></div>
+    <div class="step"><div class="sdot">6</div><div class="sc"><strong>Geographic Targeting — কোথায় ads দেখাবে?</strong><p>Dhanmondi-তে clinic হলে পুরো Bangladesh target করা ভুল — patient কি সারা দেশ থেকে আসবে? না। Dhanmondi-এর ১০–১৫ km radius target করো: Mohammadpur, Lalmatia, Green Road, Mirpur Road। শুধু সেখানে budget spend করো যেখান থেকে patient আসতে পারবে।</p></div></div>
+    <div class="step"><div class="sdot">7</div><div class="sc"><strong>Auction Insights — কার সাথে competition করছি?</strong><p>Impression Share, Top of Page Rate, Overlap Rate দেখো। Labaid বা Square-এর মতো বড় brand-এর সাথে same keywords-এ compete করা কঠিন। তাই niche differentiation করো — তাদের দুর্বল জায়গায় attack করো।</p></div></div>
+  </div>
+
+  <div class="divider"></div>
+  <div class="sec">সচরাচর জিজ্ঞাসা (FAQ)</div>
+  <div class="qa">
+    <div class="q" onclick="tog(this)"><span>পুরো Dhaka বা Bangladesh target করলে কী সমস্যা?</span><i class="ti ti-chevron-down qi" aria-hidden="true"></i></div>
+    <div class="ans">Dhanmondi-এর clinic-এ Chittagong বা Sylhet-এর মানুষ আসবে না। তাই সেখানে ads দেখালে budget নষ্ট হবে। ১০–১৫ km radius-এর মধ্যে যারা আছে তাদেরকেই target করো — এরাই actual potential patient।</div>
+    <div class="q" onclick="tog(this)"><span>High CPC keyword বাদ দেওয়া উচিত?</span><i class="ti ti-chevron-down qi" aria-hidden="true"></i></div>
+    <div class="ans">না, সবসময় নয়। "Dental implant" keyword-এ CPC বেশি হতে পারে কিন্তু service value $6,000। তাই ROI অনেক ভালো। Low CPC keyword-এ কম profit হলে সেটাই বরং ক্ষতিকর। Unit Economics দিয়ে judge করো, CPC দিয়ে নয়।</div>
+  </div>
+
+  <div class="navbtns"><button class="btn" onclick="go(1)">← Customer Research</button><button class="btn btnp" onclick="go(3)">পরের Stage — Competitor Analysis →</button></div>
+</div>
+
+<div class="pane" id="p3">
+  <div class="sh">
+    <div class="snum" style="background:#FCEBEB;color:#791F1F">4</div>
+    <div><h2>Competitor Analysis</h2><p>Competitor copy করবে না — তাদের চেয়ে better হও</p></div>
+  </div>
+
+  <div class="box bred"><div class="bt">এই Stage-এর মূল কথা</div><div class="bd">বেশিরভাগ beginner শুধু competitor-এর ad copy দেখে এবং copy করে। কিন্তু একজন strategist ভাবে — "Competitor কোথায় দুর্বল? আমি কোথায় তাদের থেকে better হতে পারি? Customer কোন কারণে competitor-এর কাছে যাচ্ছে আর কী কারণে ফিরে আসছে না?" এই প্রশ্নগুলোর উত্তর থেকেই winning strategy তৈরি হয়।</div></div>
+
+  <div class="sec">Module 17 — Competitor Research: কিভাবে খুঁজবে?</div>
+  <p class="body">Google-এ নিজেই search করো যেভাবে একজন patient করে। দেখো কোন clinics ads দেখাচ্ছে, কোনগুলো organic-এ আছে।</p>
+  <div class="steps">
+    <div class="step"><div class="sdot">1</div><div class="sc"><strong>"dentist near me" লিখে search করো</strong><p>কোন clinics-এর ads আসছে? কতগুলো? এরাই তোমার primary competitors।</p></div></div>
+    <div class="step"><div class="sdot">2</div><div class="sc"><strong>"emergency dentist Dhaka" search করো</strong><p>Emergency space-এ কে আছে? এই segment profitable কিন্তু অনেক সময় under-served।</p></div></div>
+    <div class="step"><div class="sdot">3</div><div class="sc"><strong>"dental implant Dhaka" search করো</strong><p>High-value segment-এ কে compete করছে? এখানে competition কম হলে opportunity বেশি।</p></div></div>
+  </div>
+
+  <div class="sec">Module 18 — Competitor Ads Analysis</div>
+  <p class="body">Competitor-এর ad দেখে নিচের প্রশ্নগুলো নিজেকে করো:</p>
+  <table class="tbl">
+    <tr><th style="width:25%">Competitor</th><th style="width:30%">তারা কী বলছে?</th><th style="width:45%">তুমি কী ভাববে?</th></tr>
+    <tr><td>ABC Dental</td><td>"Free Consultation"</td><td>সবাই free consultation দিচ্ছে — এটা আর USP নয়। আমি কী extra দিতে পারি?</td></tr>
+    <tr><td>Smile Care</td><td>"Same Day Appointment"</td><td>Same Day ভালো। কিন্তু আমি কি Same Day + Emergency বলতে পারি?</td></tr>
+    <tr><td>Bright Dental</td><td>"Open Weekends"</td><td>Weekend opening ভালো। কিন্তু 7 days open বলতে পারি না?</td></tr>
+  </table>
+  <div class="box bblue"><div class="bt">Key Lesson</div><div class="bd">যদি সব competitor একই offer দেয়, তাহলে সেই offer-এ আর unique value নেই। তুমি কী extra দিতে পারো সেটা ভাবো। Differentiation ছাড়া patient কোনো নির্দিষ্ট কারণে তোমাকে choose করবে না।</div></div>
+
+  <div class="sec">Module 19 — Competitor Landing Pages</div>
+  <p class="body">শুধু ads নয়, competitor-এর website এবং landing page দেখো। তারা কী highlight করছে? কী বাদ দিচ্ছে?</p>
+  <table class="tbl">
+    <tr><th style="width:25%">Competitor</th><th style="width:35%">Landing Page Highlight</th><th style="width:40%">তোমার Opportunity</th></tr>
+    <tr><td>ABC Dental</td><td>20 years experience, awards</td><td>Experience ভালো কিন্তু appointment পাওয়া কঠিন — তুমি same day emphasize করো</td></tr>
+    <tr><td>Smile Care</td><td>4.9 star reviews, team photos</td><td>Reviews ভালো — তুমিও reviews collect করো এবং pricing transparency দাও</td></tr>
+    <tr><td>Bright Dental</td><td>Financing available, payment plan</td><td>তারা financing দিচ্ছে — তুমিও দাও কিন্তু warranty-ও add করো</td></tr>
+  </table>
+
+  <div class="sec">Module 20 — Competitor Reviews (সবচেয়ে powerful insight)</div>
+  <p class="body">Google Reviews পড়া হলো competitor analysis-এর সবচেয়ে valuable কাজ। Customer নিজেই বলে দেয় কোথায় সমস্যা।</p>
+  <div class="grid2">
+    <div class="box bgreen" style="margin:0"><div class="bt">Positive Reviews থেকে শেখো</div><div class="bd">Patient কী কারণে happy? "Friendly staff", "Clean office", "Quick service" — এগুলো তুমিও করো।</div></div>
+    <div class="box bred" style="margin:0"><div class="bt">Negative Reviews থেকে Opportunity খোঁজো</div><div class="bd">"Long waiting time", "Phone ধরে না", "Hidden charges" — এগুলো competitor-এর weakness, তোমার opportunity।</div></div>
+  </div>
+  <div class="box bgreen" style="margin-top:.75rem"><div class="bt">Real Example</div><div class="bd">যদি দেখো সব competitor-এর review-এ "waiting time অনেক বেশি" complaint আছে, তাহলে তোমার USP হতে পারে "No Long Waiting — On-Time Appointment Guaranteed"। Patient-এর real frustration সরাসরি address করছে।</div></div>
+
+  <div class="sec">Stage 4-এর সম্পূর্ণ Framework (৫ প্রশ্ন)</div>
+  <table class="tbl">
+    <tr><th style="width:5%">#</th><th style="width:30%">প্রশ্ন</th><th style="width:35%">কোথায় দেখবে?</th><th style="width:30%">উদ্দেশ্য</th></tr>
+    <tr><td>1</td><td>ওরা কী offer দিচ্ছে?</td><td>Google Ads, website</td><td>Market gap খুঁজে বের করো</td></tr>
+    <tr><td>2</td><td>Customer কেন ওদের পছন্দ করছে?</td><td>Positive reviews</td><td>Winning factors বোঝো</td></tr>
+    <tr><td>3</td><td>Customer কী নিয়ে complain করছে?</td><td>Negative reviews, 2-3 star</td><td>তাদের weakness খোঁজো</td></tr>
+    <tr><td>4</td><td>ওদের landing page কী miss করছে?</td><td>Website analysis</td><td>তোমার advantage তৈরি করো</td></tr>
+    <tr><td>5</td><td>আমি কোথায় better হতে পারি?</td><td>সব research combine করে</td><td>তোমার USP define করো</td></tr>
+  </table>
+
+  <div class="divider"></div>
+  <div class="sec">সচরাচর জিজ্ঞাসা (FAQ)</div>
+  <div class="qa">
+    <div class="q" onclick="tog(this)"><span>Competitor copy করলে কী সমস্যা?</span><i class="ti ti-chevron-down qi" aria-hidden="true"></i></div>
+    <div class="ans">Competitor copy করলে তুমি তাদের মতোই দেখাবে। Patient কোনো কারণ খুঁজে পাবে না তোমাকে choose করার। "Best Dental Clinic" সবাই বলে — এটা কোনো differentiator নয়। তুমি যদি same offer দাও, তাহলে patient যে clinic-এর বেশি review বা বেশি পরিচিত সেখানেই যাবে।</div>
+    <div class="q" onclick="tog(this)"><span>Competitor-এর weak point কিভাবে exploit করবো?</span><i class="ti ti-chevron-down qi" aria-hidden="true"></i></div>
+    <div class="ans">যদি সব competitor waiting time নিয়ে complain পায়, তাহলে তোমার ads এবং landing page-এ "No Long Waiting — Book Online Now, See Doctor Same Day" বলো। এটা directly patient-এর pain point address করছে এবং competitor-এর কাছ থেকে তোমার দিকে আনছে।</div>
+  </div>
+
+  <div class="navbtns"><button class="btn" onclick="go(2)">← Market Research</button><button class="btn btnp" onclick="go(4)">পরের Stage — Offer Strategy →</button></div>
+</div>
+
+<div class="pane" id="p4">
+  <div class="sh">
+    <div class="snum" style="background:#EAF3DE;color:#3B6D11">5</div>
+    <div><h2>Offer Strategy</h2><p>মানুষ তোমার client-কেই কেন বেছে নেবে?</p></div>
+  </div>
+
+  <div class="box bgreen"><div class="bt">এই Stage-এ আসলে কী করো?</div><div class="bd">Ads চালালেই lead আসে না। Lead আসে যখন তুমি একটি compelling offer দাও — এমন কিছু যেটা দেখে patient মনে করে "এখানে গেলেই ভালো হবে"। এই Stage-এ তুমি সেই offer তৈরি করো।</div></div>
+
+  <div class="sec">Module 23 — Offer কী? (সঠিক সংজ্ঞা)</div>
+  <p class="body">অনেকে ভাবে offer মানে discount দেওয়া। কিন্তু আসলে offer হলো — "আমি patient-কে extra কী দিচ্ছি যেটা competitor দিচ্ছে না?"</p>
+  <div class="grid2">
+    <div class="box bred" style="margin:0"><div class="bt">এগুলো Offer নয়</div><div class="bd">"Best Dental Clinic in Dhaka" — এটা claim, offer নয়<br><br>"Call Now for Appointment" — CTA, offer নয়<br><br>"Experienced Dentist, Quality Care" — generic, কোনো specific value নেই</div></div>
+    <div class="box bgreen" style="margin:0"><div class="bt">এগুলো আসল Offer</div><div class="bd">"Free Consultation + Free Digital X-Ray" — tangible value<br><br>"Same Day Appointment — No Waiting" — problem solved<br><br>"Flexible EMI Plan — Start Treatment Today" — barrier removed</div></div>
+  </div>
+
+  <div class="sec">Module 24 — Value Proposition</div>
+  <p class="body">Customer treatment কেনে না — সে result কেনে। তোমার message-এ treatment বলো না, result বলো। এই পার্থক্যটা অনেক বড়।</p>
+  <table class="tbl">
+    <tr><th style="width:25%">Service</th><th style="width:30%">ভুল Message</th><th style="width:45%">সঠিক Message (Result-focused)</th></tr>
+    <tr><td>Root Canal</td><td>"We provide root canal treatment"</td><td>"Pain-free root canal — feel better the same day. Book now."</td></tr>
+    <tr><td>Teeth Whitening</td><td>"Whitening treatment available"</td><td>"Get a brighter smile in 1 hour — see the difference immediately."</td></tr>
+    <tr><td>Dental Implant</td><td>"Dental implant service"</td><td>"Permanent solution for missing teeth — smile with full confidence again."</td></tr>
+    <tr><td>Braces</td><td>"Braces treatment"</td><td>"Straight teeth in 12–18 months — transform your smile permanently."</td></tr>
+  </table>
+
+  <div class="sec">Module 25 — USP (Unique Selling Proposition)</div>
+  <p class="body">USP হলো সেই এক বা দুটো কারণ যার জন্য patient ১০টি clinic বাদ দিয়ে তোমার clinic বেছে নেবে। সবাই যদি same কথা বলে, তাহলে কোনোটাই USP নয়।</p>
+  <table class="tbl">
+    <tr><th style="width:35%">Potential USP</th><th style="width:30%">কখন কাজ করে</th><th style="width:35%">কখন কাজ করে না</th></tr>
+    <tr><td>Same Day Appointment</td><td>যদি অন্যরা দীর্ঘ waiting দেয়</td><td>যদি সবাই same day offer করে</td></tr>
+    <tr><td>Female Dentist Available</td><td>Female patient-এর জন্য বড় relief</td><td>যদি পুরুষ patient বেশি</td></tr>
+    <tr><td>Open 7 Days</td><td>Weekend availability কম থাকলে</td><td>যদি সব clinic open থাকে</td></tr>
+    <tr><td>5-Year Implant Warranty</td><td>Implant segment-এ unique</td><td>যদি অন্যরাও warranty দেয়</td></tr>
+    <tr><td>No Long Waiting Time</td><td>যদি competitors-এর review-এ wait complaint থাকে</td><td>যদি waiting issue না থাকে</td></tr>
+  </table>
+
+  <div class="sec">Module 26 — Offer Stack: একাধিক value একসাথে</div>
+  <p class="body">একটা single offer সবসময় যথেষ্ট নয়। একাধিক value combine করলে offer আরও irresistible হয়। Dental Implant-এর জন্য উদাহরণ:</p>
+  <div class="calc">
+    <div class="crow"><div class="cl">মূল Service</div><div class="cv">Dental Implant</div></div>
+    <div class="crow"><div class="cl">+ Free Consultation</div><div class="cv">Risk-free entry, decision সহজ</div></div>
+    <div class="crow"><div class="cl">+ Free Digital X-Ray ($150 value)</div><div class="cv">Immediate tangible saving</div></div>
+    <div class="crow"><div class="cl">+ Flexible EMI Financing</div><div class="cv">Upfront cost-এর barrier removed</div></div>
+    <div class="crow"><div class="cl">+ 5-Year Warranty</div><div class="cv">Quality confidence তৈরি</div></div>
+    <div class="crow"><div class="cl">+ Same Day Appointment</div><div class="cv">Urgency + convenience</div></div>
+    <div class="crow"><div class="cl">= Complete Offer Stack</div><div class="cv" style="color:#3B6D11">Patient-এর সব ভয় দূর হয়</div></div>
+  </div>
+
+  <div class="sec">Module 27 — Pricing Strategy: High vs Low Ticket</div>
+  <table class="tbl">
+    <tr><th style="width:20%">Service Type</th><th style="width:25%">উদাহরণ</th><th style="width:30%">Patient-এর সমস্যা</th><th style="width:25%">Best Offer</th></tr>
+    <tr><td>High-Ticket<br><span class="badge br">$1,000+</span></td><td>Dental Implant, Braces</td><td>Cost, risk, trust — অনেক ভাবে</td><td>Financing + Warranty + Free Consult — risk কমাও</td></tr>
+    <tr><td>Low-Ticket<br><span class="badge bb">Under $300</span></td><td>Cleaning, X-Ray</td><td>Convenience, speed, value</td><td>Fast Appointment + New Patient Special — সহজ করো</td></tr>
+  </table>
+  <div class="box bamber"><div class="bt">Master Framework — ৬ প্রশ্ন যা সবসময় করবে</div><div class="bd">1. Customer-এর সবচেয়ে বড় Problem কী? (Dental pain? Cost?)<br>2. Customer-এর সবচেয়ে বড় ভয় কী? (Doctor ভালো না? ব্যথা হবে?)<br>3. Competitor কী offer দিচ্ছে?<br>4. আমরা কী extra value দিতে পারি?<br>5. Risk কীভাবে কমানো যায়? (Warranty, Free Trial, Financing)<br>6. Convenience কীভাবে বাড়ানো যায়? (Same Day, Online Booking, Emergency)</div></div>
+
+  <div class="divider"></div>
+  <div class="sec">সচরাচর জিজ্ঞাসা (FAQ)</div>
+  <div class="qa">
+    <div class="q" onclick="tog(this)"><span>Discount দিলেই কি বেশি patient আসে?</span><i class="ti ti-chevron-down qi" aria-hidden="true"></i></div>
+    <div class="ans">সবসময় নয়। অনেক সময় discount দিলে service-এর perceived quality কমে যায়। বিশেষত High-Ticket service-এ (Implant, Braces) patient ভাবে "এত সস্তা কেন? ভালো doctor হলে এত discount দিতো না।" এখানে discount-এর বদলে Financing, Warranty, Free Consultation বেশি effective।</div>
+    <div class="q" onclick="tog(this)"><span>Value Proposition কিভাবে লিখবো?</span><i class="ti ti-chevron-down qi" aria-hidden="true"></i></div>
+    <div class="ans">সহজ formula: "[Patient] কে [Result] দিই [How]-এর মাধ্যমে।" উদাহরণ: "দাঁতের ব্যথায় ভুগছেন? Same Day Emergency Treatment-এ আজই ব্যথামুক্ত হন।" এখানে patient (ব্যথায় ভুগছেন), result (ব্যথামুক্ত), how (Same Day Emergency Treatment) — সব আছে।</div>
+  </div>
+
+  <div class="navbtns"><button class="btn" onclick="go(3)">← Competitor Analysis</button><button class="btn btnp" onclick="go(5)">পরের Stage — Campaign Strategy →</button></div>
+</div>
+
+<div class="pane" id="p5">
+  <div class="sh">
+    <div class="snum" style="background:#EEEDFE;color:#3C3489">6</div>
+    <div><h2>Campaign Strategy</h2><p>কোন পরিস্থিতিতে কোন campaign type — strategic decision</p></div>
+  </div>
+
+  <div class="box bpurple"><div class="bt">এই Stage-এ আসলে কী করো?</div><div class="bd">Campaign setup করবে না। ভাববে — "আমার ideal patient কে? সে এখন কোথায় আছে? কোন campaign type তার সাথে সবচেয়ে ভালোভাবে connect করবে? সে call করতে চায় না form fill করতে চায়?" এই strategic decision-গুলো সঠিক হলেই campaign সফল হয়।</div></div>
+  <p class="body"><strong>Context: Dental Clinic — Houston, Texas</strong><br>Business Goal: More appointments, high-quality patients, positive ROI।</p>
+
+  <div class="sec">Module 28 — Campaign Type Selection</div>
+  <p class="body">Campaign type বেছে নেওয়ার আগে নিজেকে একটাই প্রশ্ন করো: "আমার patient কি এখন actively search করছে?"</p>
+  <table class="tbl">
+    <tr><th style="width:25%">Scenario</th><th style="width:25%">Campaign Type</th><th style="width:50%">বিস্তারিত কারণ</th></tr>
+    <tr><td>Patient "dentist near me" লিখে search করছে</td><td><span class="badge bg">Search Campaign</span></td><td>High intent — patient এখনই solution চাইছে। Search Ads এখানে সবচেয়ে effective। Impression হওয়া মাত্রই conversion সম্ভব।</td></tr>
+    <tr><td>Brand awareness দরকার, search নেই</td><td><span class="badge bb">YouTube Campaign</span></td><td>Patient এখনও search করছে না। YouTube video দিয়ে তাদের educate করো ("5 Signs You Need a Root Canal") — পরে search করলে তোমাকে মনে থাকবে।</td></tr>
+    <tr><td>Search data আছে, scale করতে হবে</td><td><span class="badge ba">Performance Max</span></td><td>Search campaign থেকে কিছু data (conversions) collect হলে PMax ব্যবহার করো। Algorithm সব channels-এ (Search, YouTube, Display, Gmail) reach expand করে।</td></tr>
+    <tr><td>Local area-তে clinic-এর presence বাড়াতে হবে</td><td><span class="badge bp">Display Campaign</span></td><td>Local news site, health blogs-এ banner ad। Direct conversion কম কিন্তু brand recall বাড়ে।</td></tr>
+  </table>
+
+  <div class="sec">Module 29 — Geographic Targeting</div>
+  <p class="body">Houston-এর সব area-র patient সমান quality দেয় না। High-income area-র patient cosmetic dentistry বেশি করে এবং higher-value service নেয়।</p>
+  <div class="grid2">
+    <div class="box bgreen" style="margin:0"><div class="bt">Smart Targeting</div><div class="bd"><strong>10–15 mile radius</strong> — clinic থেকে patient আসার practical distance।<br><br><strong>High-value zip codes</strong> — River Oaks, Memorial, West University — এখানে Implant ও Braces demand বেশি।</div></div>
+    <div class="box bred" style="margin:0"><div class="bt">ভুল Targeting</div><div class="bd">পুরো Houston target করা — budget অনেক বেশি লাগবে, অনেক দূরের মানুষ আসবে না।<br><br>পুরো Texas target করা — একদমই ভুল।</div></div>
+  </div>
+
+  <div class="sec">Module 30 — Device Strategy</div>
+  <p class="body">Dental service search-এর বেশিরভাগ mobile-এ হয়। কারণ patient ব্যথায় আছে, হাতে phone আছে, সাথে সাথে "dentist near me" লিখে call করে।</p>
+  <table class="tbl">
+    <tr><th style="width:30%">Service</th><th style="width:25%">Primary Device</th><th style="width:45%">কারণ</th></tr>
+    <tr><td>Emergency Dental</td><td><span class="badge bg">Mobile 90%+</span></td><td>ব্যথায় আছে, হাতে phone, সাথে সাথে call করে</td></tr>
+    <tr><td>General Dental</td><td><span class="badge bb">Mobile 70%</span></td><td>On-the-go search, Google Maps দেখে</td></tr>
+    <tr><td>Cosmetic / Implant</td><td><span class="badge ba">Mixed</span></td><td>Research করে, desktop-এও হয়, comparison বেশি</td></tr>
+    <tr><td>B2B Dental Software</td><td><span class="badge bp">Desktop priority</span></td><td>এটা office-এ বসে research করা হয় — dental নয়</td></tr>
+  </table>
+  <p class="body">Mobile priority মানে: mobile-এ click-to-call button রাখো, mobile landing page fast করো, form ছোট রাখো (phone number আর নাম only)।</p>
+
+  <div class="sec">Module 31 — Audience Strategy</div>
+  <p class="body">Search Campaign-এ keyword-ই primary targeting। Audience হলো secondary layer যা optimization-এ সাহায্য করে।</p>
+  <div class="steps">
+    <div class="step"><div class="sdot">1</div><div class="sc"><strong>শুরুতে: Observation Mode</strong><p>Data collect করো। দেখো কোন audience segment বেশি convert করছে। In-market audiences add করো: "Dental Services", "Healthcare", "Cosmetic Procedures"।</p></div></div>
+    <div class="step"><div class="sdot">2</div><div class="sc"><strong>পরে: Bid Adjustment</strong><p>যদি দেখো 35–44 বয়সী মহিলারা বেশি convert করছে, তাদের জন্য bid বাড়াও। Data-driven decision, guess নয়।</p></div></div>
+    <div class="step"><div class="sdot">3</div><div class="sc"><strong>Remarketing (যাদের website-এ এসেছে)</strong><p>যারা landing page দেখেছে কিন্তু call করেনি, তাদের আবার দেখাও। এরা already interested ছিল।</p></div></div>
+  </div>
+
+  <div class="sec">Module 32 — Lead Generation Strategy</div>
+  <p class="body">Patient কিভাবে contact করতে চায় সেটা service-ভেদে আলাদা। ভুল lead type দিলে conversion কমে।</p>
+  <table class="tbl">
+    <tr><th style="width:25%">Service</th><th style="width:25%">Best Lead Type</th><th style="width:50%">কারণ</th></tr>
+    <tr><td>Emergency Dental</td><td><span class="badge bg">Phone Call</span></td><td>Patient ব্যথায় আছে, form fill করার time নেই, সরাসরি কথা বলতে চায়। Call button দাও।</td></tr>
+    <tr><td>Teeth Cleaning / General</td><td><span class="badge bb">Online Form</span></td><td>কম urgent, patient নিজের সময়মতো form fill করে, appointment prefer করে।</td></tr>
+    <tr><td>Cosmetic / Whitening</td><td><span class="badge ba">Form + WhatsApp</span></td><td>Aesthetic patient ছবি share করতে চায়, chat করতে চায়, casual start prefer।</td></tr>
+    <tr><td>Implant / Braces</td><td><span class="badge bp">Appointment Booking</span></td><td>High-consideration, patient consult করতে চায়, specific time slot book করতে চায়।</td></tr>
+  </table>
+
+  <div class="divider"></div>
+  <div class="sec">সচরাচর জিজ্ঞাসা (FAQ)</div>
+  <div class="qa">
+    <div class="q" onclick="tog(this)"><span>শুরু থেকেই Performance Max চালাবো?</span><i class="ti ti-chevron-down qi" aria-hidden="true"></i></div>
+    <div class="ans">না। PMax এর জন্য conversion data দরকার। নতুন campaign-এ data নেই — তাই PMax কাজ করে না। প্রথমে Search Campaign চালাও, ৩০–৫০টি conversion হলে তখন PMax শুরু করো। Data ছাড়া PMax budget নষ্ট করে।</div>
+    <div class="q" onclick="tog(this)"><span>Emergency patient-এর জন্য form lead কেন ভুল?</span><i class="ti ti-chevron-down qi" aria-hidden="true"></i></div>
+    <div class="ans">Emergency patient ব্যথায় আছে। সে "dentist near me" search করে এবং সাথে সাথে call করতে চায়। যদি landing page-এ শুধু form থাকে এবং phone number না থাকে, তাহলে সে অন্য clinic-এ call করে চলে যাবে। Emergency = Call। এটা মিস করলে সব থেকে valuable lead হারাবে।</div>
+  </div>
+
+  <div class="navbtns"><button class="btn" onclick="go(4)">← Offer Strategy</button><button class="btn btnp" onclick="go(6)">পরের Stage — Budget & Forecasting →</button></div>
+</div>
+
+<div class="pane" id="p6">
+  <div class="sh">
+    <div class="snum" style="background:#F1EFE8;color:#444441">7</div>
+    <div><h2>Budget & Forecasting</h2><p>Launch-এর আগে numbers দিয়ে ভবিষ্যৎ কল্পনা করো</p></div>
+  </div>
+
+  <div class="box bblue"><div class="bt">এই Stage-এ আসলে কী করো?</div><div class="bd">Campaign launch করার আগে হিসাব করো — "এই budget দিয়ে কত click আসবে? কত lead আসবে? কত patient হবে? Revenue কত হবে? Clinic কি profitable থাকবে?" এই calculation করতে পারলে client-এর কাছে confident হয়ে বলতে পারবে "এই budget দিলে এই result পাবেন।"</div></div>
+
+  <div class="sec">Module 33 — KPI Selection</div>
+  <p class="body">KPI মানে Key Performance Indicator — তুমি campaign-এর success কিভাবে measure করবে। Beginner এবং Strategist-এর KPI আলাদা।</p>
+  <div class="grid2">
+    <div class="box bred" style="margin:0"><div class="bt">Beginner-এর KPI (Vanity Metrics)</div><div class="bd">CTR (Click-Through Rate) কত?<br>Impressions কত হলো?<br>CPC কমলো কিনা?<br>Quality Score কত?<br><br>এগুলো দেখতে ভালো কিন্তু business revenue-এর সাথে directly connected নয়।</div></div>
+    <div class="box bgreen" style="margin:0"><div class="bt">Strategist-এর KPI (Business Metrics)</div><div class="bd"><strong>Primary:</strong> Calls, Form Leads, Appointments, New Patients<br><br><strong>Business:</strong> Cost Per Lead (CPL), Cost Per Patient (CPA), Revenue Generated, ROI<br><br>এগুলোই business owner care করে।</div></div>
+  </div>
+
+  <div class="sec">Module 34 — Budget Planning (Step-by-Step Calculation)</div>
+  <p class="body">Clinic owner বললেন "আমি প্রতি মাসে ২০ জন নতুন patient চাই।" এখন backward থেকে হিসাব করো কত budget লাগবে।</p>
+  <div class="calc">
+    <div class="crow"><div class="cl">Goal: নতুন patient/month</div><div class="cv">20 জন</div></div>
+    <div class="crow"><div class="cl">Close Rate (appointment → patient)</div><div class="cv">70%</div></div>
+    <div class="crow"><div class="cl">Appointments দরকার (20 ÷ 0.70)</div><div class="cv">≈ 29 appointments</div></div>
+    <div class="crow"><div class="cl">Website Conversion Rate (visitor → appointment)</div><div class="cv">10%</div></div>
+    <div class="crow"><div class="cl">Clicks দরকার (29 ÷ 10%)</div><div class="cv">≈ 290 clicks</div></div>
+    <div class="crow"><div class="cl">Average CPC</div><div class="cv">$4</div></div>
+    <div class="crow"><div class="cl">Monthly Budget (290 × $4)</div><div class="cv" style="color:#0C447C;font-weight:500">≈ $1,200</div></div>
+  </div>
+  <div class="box bgreen"><div class="bt">এটাই Strategic Budgeting</div><div class="bd">এখন client-কে বলতে পারবে: "আপনি ২০ জন patient চান। এর জন্য প্রতি মাসে ২৯টি appointment দরকার, সেটার জন্য ২৯০টি click, এবং তার জন্য প্রায় $১,২০০ budget দরকার।" এটা শুনলে client বিশ্বাস করে, কারণ তুমি data দিয়ে বলছো।</div></div>
+
+  <div class="sec">Module 35 — Revenue Forecast</div>
+  <p class="body">Budget plan করার পর দেখো এই investment কতটা profitable:</p>
+  <div class="grid3">
+    <div class="card"><div class="clabel">Monthly Budget</div><div class="cval">$1,200</div><div class="csub">Ad spend</div></div>
+    <div class="card"><div class="clabel">Clicks</div><div class="cval">300</div><div class="csub">at $4 CPC</div></div>
+    <div class="card"><div class="clabel">Appointments</div><div class="cval">30</div><div class="csub">at 10% conv rate</div></div>
+    <div class="card"><div class="clabel">New Patients</div><div class="cval">21</div><div class="csub">at 70% close rate</div></div>
+    <div class="card"><div class="clabel">Avg. Treatment</div><div class="cval">$500</div><div class="csub">per patient</div></div>
+    <div class="card"><div class="clabel">Revenue</div><div class="cval" style="color:#3B6D11">$10,500</div><div class="csub">8.75x ROAS</div></div>
+  </div>
+  <div class="box bgreen"><div class="bt">ROI Check</div><div class="bd">$1,200 invest করে $10,500 revenue → এটা 775% ROI। Clinic owner খুশি হবেন কারণ এটা clearly profitable।</div></div>
+
+  <div class="sec">Module 36 — Scenario Planning (৩টি Case)</div>
+  <p class="body">একজন smart strategist সবসময় best case, normal case, এবং worst case তিনটি scenario prepare করে রাখে। কারণ market কখনো perfectly predictable নয়।</p>
+  <table class="tbl">
+    <tr><th style="width:20%">Scenario</th><th style="width:15%">CPC</th><th style="width:20%">Conv. Rate</th><th style="width:15%">Patients</th><th style="width:15%">Revenue</th><th style="width:15%">Decision</th></tr>
+    <tr><td><span class="badge bg">Best Case</span></td><td>$3</td><td>15%</td><td>30</td><td style="color:#3B6D11">$15,000</td><td>Scale করো</td></tr>
+    <tr><td><span class="badge ba">Normal Case</span></td><td>$4</td><td>10%</td><td>21</td><td>$10,500</td><td>Continue করো</td></tr>
+    <tr><td><span class="badge br">Worst Case</span></td><td>$6</td><td>5%</td><td>10</td><td style="color:#791F1F">$5,000</td><td>Strategy revise</td></tr>
+  </table>
+  <div class="box bred"><div class="bt">Worst Case-এ কী করবে?</div><div class="bd">Worst case-এ যদি business survive করতে না পারে, তাহলে launch করার আগেই strategy change করো। হয়তো offer improve করতে হবে, অথবা target keyword change করতে হবে, অথবা landing page fix করতে হবে।</div></div>
+
+  <div class="sec">Module 37 — Pre-Launch Risk Assessment</div>
+  <p class="body">Campaign launch করার আগে এই checklist complete করো। একটা item বাদ পড়লেও campaign fail হতে পারে।</p>
+  <table class="tbl">
+    <tr><th style="width:20%">Area</th><th style="width:40%">কী Check করবে</th><th style="width:40%">কেন গুরুত্বপূর্ণ</th></tr>
+    <tr><td><strong>Offer</strong></td><td>Free Consultation, Emergency Appointment আছে?</td><td>Offer না থাকলে competitor-এর চেয়ে আলাদা হবে না</td></tr>
+    <tr><td><strong>Website</strong></td><td>Mobile friendly? 3 sec-এর মধ্যে load হয়?</td><td>Mobile slow হলে patient চলে যাবে — conversion শূন্য</td></tr>
+    <tr><td><strong>Tracking</strong></td><td>Call tracking, Form tracking, Conversion tag install?</td><td>Tracking ছাড়া জানবে না কোনটা কাজ করছে</td></tr>
+    <tr><td><strong>Budget</strong></td><td>Client-এর expectation realistic?</td><td>$100 budget দিয়ে $20,000 revenue expect করলে ভুল</td></tr>
+    <tr><td><strong>Competition</strong></td><td>CPC sustainable? Competitor কত বেশি?</td><td>CPC অনেক বেশি হলে profit margin কমে যাবে</td></tr>
+    <tr><td><strong>Demand</strong></td><td>মানুষ কি সত্যিই search করছে?</td><td>Demand না থাকলে কোনো ads-ই কাজ করবে না</td></tr>
+  </table>
+
+  <div class="divider"></div>
+  <div class="sec">সচরাচর জিজ্ঞাসা (FAQ)</div>
+  <div class="qa">
+    <div class="q" onclick="tog(this)"><span>Client ছোট budget দিলে কী করবো?</span><i class="ti ti-chevron-down qi" aria-hidden="true"></i></div>
+    <div class="ans">ছোট budget হলে সবচেয়ে profitable service-এ focus করো এবং শুধু Transactional keywords target করো। Teeth Cleaning-এ ছোট budget waste — বরং Implant বা Braces-এ দাও যেখানে একটা patient-ই অনেক revenue আনে। Geographic targeting ও tight রাখো — ১০ km radius-এর মধ্যে।</div>
+    <div class="q" onclick="tog(this)"><span>Conversion tracking কেন এত important?</span><i class="ti ti-chevron-down qi" aria-hidden="true"></i></div>
+    <div class="ans">Conversion tracking ছাড়া তুমি অন্ধের মতো ads চালাচ্ছো। জানবে না কোন keyword থেকে call আসছে, কোন ad copy কাজ করছে, কোন landing page better। Tracking থাকলে data দেখে optimize করা যায়। না থাকলে শুধু guess করতে হয় — এবং টাকা নষ্ট হয়।</div>
+    <div class="q" onclick="tog(this)"><span>ROAS এবং ROI-এর পার্থক্য কী?</span><i class="ti ti-chevron-down qi" aria-hidden="true"></i></div>
+    <div class="ans">ROAS (Return On Ad Spend) = Revenue ÷ Ad Cost। উদাহরণ: $1,200 ads-এ $10,500 revenue হলে ROAS = 8.75x। ROI (Return On Investment) সব cost হিসাব করে — ads + staff + overhead। Client-এর সাথে ROAS-এ কথা বলো, কিন্তু নিজে ROI দেখো।</div>
+  </div>
+
+  <div class="navbtns"><button class="btn" onclick="go(5)">← Campaign Strategy</button><button class="btn btnp" onclick="sendPrompt('Google Ads Campaign Planning এর সব ৭টি Stage একসাথে বাংলায় সংক্ষেপে বলো')">সম্পূর্ণ Summary দেখো ↗</button></div>
+</div>
+
+<script>
+function go(n){
+  document.querySelectorAll('.pane').forEach((p,i)=>p.classList.toggle('on',i===n));
+  document.querySelectorAll('.nb').forEach((b,i)=>b.classList.toggle('on',i===n));
+  document.getElementById('prog').style.width=((n+1)/7*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function tog(el){
+  var ans=el.nextElementSibling;
+  el.classList.toggle('open');
+  ans.classList.toggle('show');
+}
+</script>
